@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+ <head>
+	<meta charset="UTF-8">
+	<title>Crud Dasar Angular</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.css">
+	<style>
+	span {margin:5px;}
+	</style>
+ </head>
+ <body>
+	<div ng-app="crudApp">
+		<div ng-controller="crudController">
+
+			<div class="container well mtp75">
+				
+				<h3><center>Master Penambahan Data Dengan Angular</center></h3>
+
+				<div class="row">
+					<br>
+					<span ng-click="addUser()" class="pull-right btn btn-danger">Add New User</span>
+				</div><br>
+				
+				<br>
+				<div class="row">	
+
+				<table cellpadding=10 cellspacing=10 border=0 class="table">
+					<tr>
+						<th>No.</th>
+						<th ng-click="sort('nama_b')">Nama Lengkap
+						<span class="glyphicon sort-icon" ng-show="sortKey=='nama_b'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						</th>
+						<th ng-click="sort('nama_d')">Nama Panggilan
+						<span class="glyphicon sort-icon" ng-show="sortKey=='nama_d'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						</th>
+						<th ng-click="sort('type')">Nama User 
+						<span class="glyphicon sort-icon" ng-show="sortKey=='type'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						</th>
+						<th ng-click="sort('action')">Nama Password
+						<span class="glyphicon sort-icon" ng-show="sortKey=='action'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						
+					</tr>
+					
+					<tr dir-paginate="user in users|orderBy:sortKey:reverse|filter:search:type|itemsPerPage:actItem" ng-class="$even ? 'even-row' : 'odd-row _'">
+						<td>{{$index+1}}</td>
+						<td>{{user.nama_b | uppercase}}</td>
+						<td>{{user.nama_d | lowercase}}</td>
+						<td>{{user.type}}</td>
+						<td>{{user.action}}</td>
+					</tr>
+				</table>
+				
+				<div class="pull-right" style="width:20%;">
+						<select class="form-control"
+						ng-model="actItem"
+						ng-change="activeStatus(actItem)"
+						ng-options="page for (idx,page) in itemShowCount">
+						</select>
+				</div>
+
+				<div class="text-center">
+					<dir-pagination-controls
+					max-size="5"
+					direction-links="true"
+					boundary-links="true" >
+					</dir-pagination-controls>
+				</div>
+				
+				</div> <!-- End OF Row -->
+			</div><!-- End OF Container -->
+			
+			<div class="container" ng-show="UserFormContainer">
+				<div class="row">
+				
+				<div ng-click="closeFrmBtn()">X</div>
+				
+				<table class="table">
+					<input type="text" hidden disabled="disabled" ng-model="UserId" />
+					<tr>
+						<td>Nama Lengkap</td>
+						<td><input type="text" ng-model="Usernama_b" /></td>
+					</tr>
+					<tr>
+						<td>Nama Panggilan</td>
+						<td><input type="text" ng-model="Usernama_d" /></td>
+					</tr>
+					<tr>
+						<td>Nama User</td>
+						<td><input type="text" ng-model="Usertype" /></td>
+					</tr>
+					<tr>
+						<td>Nama Password</td>
+						<td><input type="text" ng-model="Useraction" /></td>
+					</tr>
+					<tr>
+						<td><input type="button" class="btn btn-default" value="Save" ng-click="AddUpdateUser()" /></td>
+						<td><input type="button" class="btn btn-danger" value="Cancel" ng-click="Cancel()" /></td>
+					</tr>
+					</table>
+					
+				</div> <!-- End OF Row -->
+			</div><!-- End OF Container -->
+
+		</div> <!-- End Of ng-controller -->
+	</div> <!-- End Of ng-app -->
+	<script src="js/angular.min.js"></script>
+	<script src="js/dirPagination.js"></script>
+	<script src="js/Module.js"></script>
+	<script src="js/Service.js"></script>
+	<script src="js/Controller.js"></script>
+ </body>
+</html>
